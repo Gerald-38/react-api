@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect  } from "react-router-dom";
+import PhoneList from "./components/PhoneList";
+import Header from "./components/Layout/Header";
+import EditPhone from "./components/EditPhone";
+import AddPhone from "./components/AddPhone";
+//import useToken from "./hooks/useToken";
+
+
+import { GlobalProvider } from './context/GlobalState';
+
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+//const { bToken, handleTokenViaPrompt } = useToken();
+
+
+
+///////////////////// AFFICHAGE DES COMPOSANTS ////////////////////
+
+return (
+  <GlobalProvider> 
+    <Router>               
+        <Header />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={() => <PhoneList />}
+            />
+            <Route path="/addPhone" 
+            component={() => <AddPhone />} 
+            />
+            <Route exact path="/">
+
+            </Route>
+            <Route exact path="/editPhone/:id" 
+            component= {(props, id) => <EditPhone  {...props}id={id}/>} 
+            />
+          </Switch>
+    </Router>
+  </GlobalProvider>
   );
+
 }
 
+
 export default App;
+
+
+
